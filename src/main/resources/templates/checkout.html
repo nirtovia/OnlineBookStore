@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color: ghostwhite;">
+<div class="topnav">
+    <a th:href="@{/}">Home</a>
+    <a th:href="@{/user/orders}" style="float: left">My Orders</a>
+    <a th:href="@{#}" style="float: right">Hi, <span sec:authentication="name"></span></a>
+    <a th:href="@{/logout}" style="float: right">Logout</a>
+</div>
+<div class="jumbotron jumbotron-fluid" style="background-color: ghostwhite">
+    <div class="container">
+        <h1 style="text-align: center; font-family: fantasy; font-size: 40px !important;margin-top: -20px;">Order Details</h1>
+        <hr>
+        <div class="container" style="display: grid;">
+            <p style="font-style: inherit;font-family: fantasy;float: right;font-size: 25px;color: crimson;">Your Order ID: <span th:text="${order.getId()}"></span></p>
+            <br>
+            <p style="color: crimson;font-style: inherit;font-family: fantasy;float: right;font-size: 25px;">Total Price: <span th:text="${order.getTotalPrice()}"></span></p>
+            <br>
+            <p style="color: crimson;font-style: inherit;font-family: fantasy;float: right;font-size: 25px;">Following are the books that you ordered !</p>
+            <br>
+        </div>
+        <table class="table table-bordered table-responsive-md">
+            <thead>
+            <tr>
+                <th>Book Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Author</th>
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="orderItem : ${order.getOrderItems()}">
+                <td th:text="${orderItem.getBook().getId()}"></td>
+                <td th:text="${orderItem.getBook().getName()}"></td>
+                <td th:text="${orderItem.getBook().getDescription()}"></td>
+                <td th:text="${orderItem.getBook().getAuthor()}"></td>
+                <td th:text="${orderItem.getBook().getPrice()}"></td>
+                <td th:text="${orderItem.getQuantity()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
